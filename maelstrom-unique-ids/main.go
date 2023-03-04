@@ -35,6 +35,7 @@ func generateId(msg maelstrom.Message) Id {
 
 func main() {
 	n := maelstrom.NewNode()
+	// generate is the type - very important while reading tasks
 	n.Handle("generate", func(msg maelstrom.Message) error {
 		// Unmarshal the message body as an loosely-typed map.
 		var body Request
