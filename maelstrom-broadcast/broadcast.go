@@ -22,8 +22,19 @@ func Broadcast(n *maelstrom.Node) func(msg maelstrom.Message) error {
 			return err
 		}
 
-		StoreInstance().Save(body.Message)
+		saved := StoreInstance().Save(body.Message)
+		if saved {
+			destinations := GossipTo(msg.Dest)
+			for i := 0; i < len(destinations); i++ {
+				n.RPC(destinations[i], BroadcastRequest{
+					Type:    "broadcast",
+					Message: body.Message,
+				}, func(msg maelstrom.Message) error {
+					return nil
+				})
 
+			}
+		}
 		response := BroadcastResponse{
 			Type: "broadcast_ok",
 		}
