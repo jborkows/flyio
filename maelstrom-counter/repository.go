@@ -25,8 +25,6 @@ func (self *Repository) addDelta(delta int) {
 		return
 	}
 
-	self.Write(context.Background(), fmt.Sprintf("%v AAAAA", rand.Float64()), "dupa")
-
 	value, err := self.tryReading()
 	if err != nil {
 		go func() {
@@ -62,6 +60,9 @@ func (self *Repository) tryReading() (int, error) {
 }
 
 func (self *Repository) read() int {
+
+	self.Write(context.Background(), fmt.Sprintf("%v AAAAA", rand.Float64()), "be sure that writes ended")
+
 	value, err := self.tryReading()
 	if err != nil {
 		return 0
