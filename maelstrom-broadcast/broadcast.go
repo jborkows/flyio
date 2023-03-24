@@ -29,11 +29,11 @@ func gossip_broadcast(n *maelstrom.Node) func(body BroadcastRequest, destination
 			})
 		}()
 		select {
-		case <-time.After(100 * time.Millisecond):
+		case <-time.After(1 * time.Second):
 			aBody := body
 			aDestination := destination
 			go func() {
-				timer := time.NewTimer(100 * time.Millisecond)
+				timer := time.NewTimer(1 * time.Second)
 				<-timer.C
 				gossip_broadcast(n)(aBody, aDestination)
 			}()

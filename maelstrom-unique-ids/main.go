@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"sync/atomic"
 
@@ -37,7 +36,6 @@ func main() {
 	n := maelstrom.NewNode()
 	// generate is the type - very important while reading tasks
 	n.Handle("generate", func(msg maelstrom.Message) error {
-		// Unmarshal the message body as an loosely-typed map.
 		var body Request
 		if err := json.Unmarshal(msg.Body, &body); err != nil {
 			return err
